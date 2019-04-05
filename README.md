@@ -31,14 +31,15 @@ Let's start with an example that shows the sessions API in a nutshell:
 	// environmental variable, or flag (or both), and don't accidentally commit it
 	// alongside your code. Ensure your key is sufficiently random - i.e. use Go's
 	// crypto/rand or securecookie.GenerateRandomKey(32) and persist the result.
-	var store = sessions.NewCookieStore([]byte(os.Getenv("SESSION_KEY")))
+	var store = sessions.NewCookieStore([]byte(os.Getenv("SESSION_KEY")))// cookie name
 
 	func MyHandler(w http.ResponseWriter, r *http.Request) {
 		// Get a session. We're ignoring the error resulted from decoding an
 		// existing session: Get() always returns a session, even if empty.
-		session, _ := store.Get(r, "session-name")
+		session, _ := store.Get(r, "session-name") // session name
 		// Set some session values.
-		session.Values["foo"] = "bar"
+		session.Values["foo"] = "bar" // session的数据 这个values 就是那个 单一的map【interface{}】interface{} 
+		 // 这个values 就是那个单一的session的map
 		session.Values[42] = 43
 		// Save it before we write to the response/return from the handler.
 		session.Save(r, w)
